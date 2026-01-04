@@ -1,5 +1,6 @@
 import os
 import subprocess
+
 import pandas as pd
 import streamlit as st
 
@@ -90,22 +91,24 @@ if st.button("🎵 Download Audio", type="primary"):
 
     # Check if ffmpeg is available
     if os.system("ffmpeg -version > /dev/null 2>&1") != 0:
-        st.error("""
-        **FFmpeg not found!** 
-        
+        st.error(
+            """
+        **FFmpeg not found!**
+
         Please install ffmpeg first:
         - **Ubuntu/Debian**: `sudo apt install ffmpeg`
-        - **macOS**: `brew install ffmpeg` 
+        - **macOS**: `brew install ffmpeg`
         - **Windows**: Download from https://ffmpeg.org/download.html
-        """)
+        """
+        )
 
     # Show progress
     with st.spinner("Processing download..."):
         try:
             # Run the script file
             run_and_display_stdout(
-                # "/opt/anaconda3/envs/youtube-downloader/bin/python3",
-                "/opt/anaconda3/bin/python/",
+                # Assuming path to python is in .venv
+                os.path.join(os.getcwd(), ".venv/bin/python/"),
                 "run_download.py",
                 "-f",
                 selected_format,
