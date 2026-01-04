@@ -1,14 +1,14 @@
+import argparse
 import os
 import sys
-import argparse
-import yt_dlp
-
 from pathlib import Path
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import parse_qs, urlparse
+
+import yt_dlp
 
 # Default settings
 DEFAULT_AUDIO_FORMAT = "mp3"
-DEFAULT_DOWNLOAD_DIR = "downloads"
+DEFAULT_DOWNLOAD_DIR = "../downloads"
 DEFAULT_QUALITY = "320k"
 
 
@@ -38,16 +38,16 @@ class YouTubeDownloader:
             "outtmpl": str(self.output_dir / "%(title)s.%(ext)s"),
             "extractaudio": True,
             "audioformat": self.audio_format,
-            "audioquality": self.quality
-            if self.audio_format == "mp3"
-            else "0",  # 0 = best for wav/flac
+            "audioquality": (
+                self.quality if self.audio_format == "mp3" else "0"
+            ),  # 0 = best for wav/flac
             "postprocessors": [
                 {
                     "key": "FFmpegExtractAudio",
                     "preferredcodec": self.audio_format,
-                    "preferredquality": self.quality
-                    if self.audio_format == "mp3"
-                    else None,
+                    "preferredquality": (
+                        self.quality if self.audio_format == "mp3" else None
+                    ),
                 }
             ],
             "ffmpeg_location": None,  # Will use system ffmpeg
