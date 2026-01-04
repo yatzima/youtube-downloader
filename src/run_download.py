@@ -8,7 +8,7 @@ import yt_dlp
 
 # Default settings
 DEFAULT_AUDIO_FORMAT = "mp3"
-DEFAULT_DOWNLOAD_DIR = "../downloads"
+DEFAULT_DOWNLOAD_DIR: str = os.path.join(os.getenv("HOME"), "Music/downloads")
 DEFAULT_QUALITY = "320k"
 
 
